@@ -9,7 +9,7 @@ import '../../data/game_board.dart';
 class HexagonalGameBoard extends StatelessWidget {
   final HexagonType type = HexagonType.FLAT;
   final int depth = 3;
-  late GameBoard gameBoard;
+  GameBoard gameBoard = GameBoard(3);
 
   @override
   Widget build(BuildContext context) {
@@ -36,30 +36,9 @@ class HexagonalGameBoard extends StatelessWidget {
               child: InkWell(
                 onTap: () async {
                   // Ändere die Farbe nur beim Klicken
-                  if (coordinates.q == 0 && coordinates.r == -3) {
-                    print(coordinates);
-                    GameBoard gameBoard = GameBoard();
-                    List<String> test = gameBoard.checkAndOccupyRow(0, -3);
-                    print(test);
-                    try {
-                      hexagonGridProvider.changeHexagonColor(
-                          test[0] as int, test[0] as int, Colors.red);
-                    } catch (e) {
-                      hexagonGridProvider.changeHexagonColor(
-                          0, 3, Colors.red);
-                    }
-                    //for (int i = 0, value1 = -4, value2 = -3; i < 7; i++) {
-                      //await Future.delayed(Duration(milliseconds: 30));
-                      //hexagonGridProvider.changeHexagonColor(0, value1, Colors.white);
-                      //hexagonGridProvider.changeHexagonColor(0, value2, Colors.red);
-                      //value1++;
-                      //value2++;
-                    //}
-
-                  } else {
-                    hexagonGridProvider.changeHexagonColor(
-                        coordinates.q, coordinates.r, Colors.red);
-                  }
+                  List<int> test = gameBoard.assignAvailableCoordinateInRow([coordinates.q, coordinates.r]);
+                  hexagonGridProvider.changeHexagonColor(
+                      test[0],test[1], Colors.blue);
                 },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
